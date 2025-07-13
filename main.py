@@ -1,0 +1,28 @@
+import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/')
+def home():
+    return "Flask API is running on Render!"
+
+@app.route('/calculate-tax', methods=['POST'])
+def calculate_tax():
+    data = request.get_json()
+    income = data.get('income', 0)
+
+    if income <= 10000:
+        tax = 0
+    elif income <= 50000:
+        tax = (income - 10000) * 0.1
+    else:
+        tax = (40000 * 0.1) + (income - 50000) * 0.2
+
+    return jsonify({'income': income, 'tax': round(tax, 2)})
+
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
