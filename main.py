@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Allow all origins
 
 @app.route('/')
 def home():
@@ -12,7 +12,7 @@ def home():
 @app.route('/calculate-tax', methods=['POST'])
 def calculate_tax():
     data = request.get_json()
-    income = data.get('income', 0)
+    income = float(data.get('income', 0))
 
     if income <= 10000:
         tax = 0
@@ -26,3 +26,4 @@ def calculate_tax():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
