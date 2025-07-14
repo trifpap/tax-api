@@ -17,9 +17,9 @@ def home():
 
 @app.route('/calculate-tax', methods=['POST'])
 def calculate_tax():
-    key = request.headers.get("X-API-Key")
-    if key != API_KEY:
-        abort(401)  # Unauthorized
+#    key = request.headers.get("X-API-Key")
+#    if key != API_KEY:
+#        abort(401)  # Unauthorized
     
     data = request.get_json()
     income = float(data.get('income', 0))
